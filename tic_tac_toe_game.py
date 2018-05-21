@@ -66,6 +66,39 @@ start=time.time()
 for _ in range(1000):
     x.append(play_game())
 stop=time.time()
-print(stop-start)
+print'without stategic playing {}'.format(stop-start)
+plt.subplot(1,2,1)
 plt.hist(x)
+plt.xlabel('draw player 1 or player 2')
+plt.ylabel(' Number of wins')
+plt.title('Without strategic playing')
+
+
+def play_strategic_game():
+    board, winner = create_board(), 0
+    board[1,1] = 1
+    while winner == 0:
+        for player in [2,1]:
+            # use `random_place` to play a game, and store as `board`.
+            # use `evaluate(board)`, and store as `winner`.
+            random_place(board,player)
+            winner=evaluate(board)
+            if winner != 0:
+                break
+    return winner
+
+play_strategic_game()  
+a=[]
+start=time.time()
+for _ in range(1000):
+    a.append(play_strategic_game())
+stop=time.time()
+print'with strategic playing {}'.format(stop-start)
+plt.subplot(1,2,2)
+plt.hist(a)
+plt.xlabel('draw player 1 or player 2')
+plt.ylabel(' Number of wins')
+plt.title('With strategic playing')
+
 plt.show()
+plt.close()
